@@ -16,7 +16,7 @@ sysfs_i2c_14
 sysfs_ttyFT0
 
 $ echo $sysfs_i2c_14
-/sys/bus/hid/drivers/ft260/0003:0403:6030.0011
+/sys/bus/hid/drivers/hid-generic/0003:413c:d100.0011
 '
 # Example with 2 ft260 devices:
 : '
@@ -27,10 +27,10 @@ sysfs_i2c_14
 sysfs_ttyFT0
 
 $ echo $sysfs_i2c_15
-/sys/bus/hid/drivers/ft260/0003:0403:6030.0013
+/sys/bus/hid/drivers/hid-generic/0003:413c:d100.0013
 '
 
-PVID='*0403:6030*'
+PVID='*413c:d100*'
 SYSFS_FT260=/sys/bus/hid/drivers/ft260/
 
 a=$(find $SYSFS_FT260 -name $PVID | xargs -I % sh -c 'find %/ -maxdepth 1 -name i2c-* -o -name tty*')

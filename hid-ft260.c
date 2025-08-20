@@ -447,11 +447,17 @@ enum {
 #define UART_COUNT_MAX (4) /* Number of supported UARTs */
 #define XMIT_FIFO_SIZE (PAGE_SIZE)
 
+/*
 static const struct hid_device_id ft260_devices[] = {
 	{ HID_USB_DEVICE(USB_VENDOR_ID_FUTURE_TECHNOLOGY,
 			 USB_DEVICE_ID_FT260) },
-	{ /* END OF LIST */ }
+	{  END OF LIST  }
 };
+*/
+static const struct hid_device_id ft260_devices[] = {
+	{HID_USB_DEVICE(USB_VENDOR_ID_DELL,
+					USB_DEVICE_ID_DELL_eRDHx)},
+	{/* END OF LIST */}};
 MODULE_DEVICE_TABLE(hid, ft260_devices);
 
 struct ft260_device {
@@ -2193,7 +2199,7 @@ static int ft260_i2c_probe(struct ft260_device *dev,
 	dev->adap.quirks = &ft260_i2c_quirks;
 	dev->adap.dev.parent = &hdev->dev;
 	snprintf(dev->adap.name, sizeof(dev->adap.name),
-		 "FT260 usb-i2c bridge");
+			 "Dell eRDHx FT260 usb-i2c bridge");
 
 	mutex_init(&dev->lock);
 	init_completion(&dev->wait);
