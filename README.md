@@ -144,6 +144,31 @@ path, as explained earlier in **Configure ft260 device via sysfs** and
 
 In this example, I configure pin 14 to act as GPIO2:
 
+NOTES FROM MARK: 
+Use gpioinfo to see what chip the FT260 is
+Ex.
+gpiochip14 - 14 lines:
+    line   0:      unnamed       unused   input  active-high
+    line   1:      unnamed       unused   input  active-high
+    line   2:      unnamed       unused   input  active-high
+    line   3:      unnamed       unused   input  active-high
+    line   4:      unnamed       unused   input  active-high
+    line   5:      unnamed       unused   input  active-high
+    line   6:      unnamed       unused   input  active-high
+    line   7:      unnamed       unused   input  active-high
+    line   8:      unnamed       unused   input  active-high
+    line   9:      unnamed       unused   input  active-high
+    line  10:      unnamed       unused   input  active-high
+    line  11:      unnamed       unused   input  active-high
+    line  12:      unnamed       unused   input  active-high
+    line  13:      unnamed       unused   input  active-high
+
+
+Use 14 instead of 0 for below example
+
+8/19 gpioget sets some of the gpio pins to 0 before reading back a 0. UI
+Also can't check pin function with that cat output. UI
+
 ```
 $ cat $sysfs_ttyFT0/gpio2_func
 1
