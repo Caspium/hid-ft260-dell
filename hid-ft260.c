@@ -817,8 +817,8 @@ static int ft260_i2c_write_read(struct ft260_device *dev, struct i2c_msg *msgs)
 	u8 addr = msgs[0].addr;
 	u16 read_off = 0;
 
-	if (wr_len > 2) {
-		hid_err(hdev, "%s: invalid wr_len: %d\n", __func__, wr_len);
+	if (wr_len > FT260_WR_I2C_DATA_MAX) {
+		hid_err(hdev, "%s: invalid wr_len: %d (max %d)\n", __func__, wr_len, FT260_WR_I2C_DATA_MAX);
 		return -EOPNOTSUPP;
 	}
 
@@ -993,7 +993,7 @@ static u32 ft260_functionality(struct i2c_adapter *adap)
 
 static const struct i2c_adapter_quirks ft260_i2c_quirks = {
 	.flags = I2C_AQ_COMB_WRITE_THEN_READ,
-	.max_comb_1st_msg_len = 2,
+	.max_comb_1st_msg_len = FT260_WR_I2C_DATA_MAX,
 };
 
 static const struct i2c_algorithm ft260_i2c_algo = {
