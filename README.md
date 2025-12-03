@@ -164,10 +164,39 @@ gpiochip14 - 14 lines:
     line  13:      unnamed       unused   input  active-high
 
 
-Use 14 instead of 0 for below example
+gpiodetect
 
-8/19 gpioget sets some of the gpio pins to 0 before reading back a 0. UI
-Also can't check pin function with that cat output. UI
+looking for PID: D101 for Fan, D100 for HUB
+record chip number
+
+gpioinfo [chipnumber]
+
+
+see 14 pins
+
+Use
+
+gpioget [chipnumber] [pin]
+
+gpioset [chipnumber] [pin]=[0|1]
+
+| SCHEM PIN | GPIO# | PIN (for command) | Purpose                              |
+|-----------|-------|--------------------|--------------------------------------|
+| DIO5      | 0     | 0                 | I2C                                  |
+| DIO6      | 1     | 1                 | I2C                                  |
+| DIO7      | 2     | 2                 | FAN2_PG                              |
+| DIO8      | 3     | 3                 | VRD_DC_EFUSE_48V_FAN1234_PG         |
+| DIO10     | 4     | 4                 | FAN4_PG                              |
+| DIO11     | 5     | 5                 | FAN3_PG                              |
+| DIO0      | A     | 6                 | NC                                   |
+| DIO1      | B     | 7                 | FRU_WP                               |
+| DIO3      | C     | 8                 | LED_GRN                              |
+| DIO4      | D     | 9                 | LED_AMB                              |
+| DIO2      | E     | 10                | FAN1_PG                              |
+| DIO9      | F     | 11                | DOOR_SENSE_EN                        |
+| DIO12     | G     | 12                | NC                                   |
+| DIO13     | H     | 13                | RFC_RESET                            |
+
 
 ```
 $ cat $sysfs_ttyFT0/gpio2_func
