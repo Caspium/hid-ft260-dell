@@ -737,7 +737,10 @@ static int ft260_i2c_read(struct ft260_device *dev, u8 addr, u8 *data,
 			  u16 len, u8 flag)
 {
 	u16 rd_len;
-	u16 rd_data_max = 60;
+	// Mark Golla: Reads have been aborting prematurly at 60 bytes.
+	// This fixes it, but need to analyze whether this breaks other things
+	// u16 rd_data_max = 60;
+	u16 rd_data_max = FT260_RD_DATA_MAX;
 	int timeout, jiffies, ret = 0;
 	struct ft260_i2c_read_request_report rep;
 	struct hid_device *hdev = dev->hdev;
@@ -756,7 +759,7 @@ static int ft260_i2c_read(struct ft260_device *dev, u8 addr, u8 *data,
 			timeout = FT260_RD_MULTI_REPORT_TO;
 			rd_len = rd_data_max;
 		}
-		rd_data_max = FT260_RD_DATA_MAX;
+		//rd_data_max = FT260_RD_DATA_MAX;
 
 		rep.report = FT260_I2C_READ_REQ;
 		rep.length = cpu_to_le16(rd_len);
