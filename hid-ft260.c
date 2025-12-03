@@ -9,6 +9,7 @@
  */
 
 #include "hid-ids.h"
+#include <linux/hid.h>
 #include <linux/hidraw.h>
 #include <linux/i2c.h>
 #include <linux/module.h>
@@ -2184,6 +2185,29 @@ static const struct tty_port_operations ft260_uart_port_ops = {
 
 static struct tty_driver *ft260_tty_driver;
 
+static const char *ft260_get_device_name(struct hid_device *hdev)
+{
+	struct usb_interface *intf = to_usb_interface(hdev->dev.parent);
+	struct usb_device *udev = interface_to_usbdev(intf);
+	__u16 pid = le16_to_cpu(udev->descriptor.idProduct);
+
+	switch (pid)
+	{
+	case USB_DEVICE_ID_DELL_eRDHx_Hub:
+		return "Dell eRDHx Hub FT260 usb-i2c bridge";
+	case USB_DEVICE_ID_DELL_eRDHx_Fans:
+		return "Dell eRDHx Fan FT260 usb-i2c bridge";
+	case USB_DEVICE_ID_DELL_eRDHx_LCD:
+		return "Dell eRDHx LCD FT260 usb-i2c bridge";
+	case USB_DEVICE_ID_DELL_eRDHx_Light:
+		return "Dell eRDHx Light FT260 usb-i2c bridge";
+	case USB_DEVICE_ID_DELL_eRDHx_Temp:
+		return "Dell eRDHx Air Temp FT260 usb-i2c bridge";
+	default:
+		return "Dell FT260 usb-i2c bridge";
+	}
+}
+
 static int ft260_i2c_probe(struct ft260_device *dev,
 			   struct ft260_get_system_status_report *cfg)
 {
@@ -2202,7 +2226,7 @@ static int ft260_i2c_probe(struct ft260_device *dev,
 	dev->adap.quirks = &ft260_i2c_quirks;
 	dev->adap.dev.parent = &hdev->dev;
 	snprintf(dev->adap.name, sizeof(dev->adap.name),
-			 "Dell eRDHx FT260 usb-i2c bridge");
+			 "%s", ft260_get_device_name(hdev));
 
 	mutex_init(&dev->lock);
 	init_completion(&dev->wait);
