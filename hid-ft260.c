@@ -455,10 +455,16 @@ static const struct hid_device_id ft260_devices[] = {
 	{  END OF LIST  }
 };
 */
+
+// This is the list of devices supported by this driver
 static const struct hid_device_id ft260_devices[] = {
-	{HID_USB_DEVICE(USB_VENDOR_ID_DELL,
-					USB_DEVICE_ID_DELL_eRDHx)},
-	{/* END OF LIST */}};
+	{ HID_USB_DEVICE(USB_VENDOR_ID_DELL, USB_DEVICE_ID_DELL_eRDHx_Hub) },
+	{ HID_USB_DEVICE(USB_VENDOR_ID_DELL, USB_DEVICE_ID_DELL_eRDHx_Fans) },
+	// { HID_USB_DEVICE(USB_VENDOR_ID_DELL, USB_DEVICE_ID_DELL_eRDHx_LCD) }, // This is a SPI device
+	// { HID_USB_DEVICE(USB_VENDOR_ID_DELL, USB_DEVICE_ID_DELL_eRDHx_Light) }, // This is a UART device
+	{ HID_USB_DEVICE(USB_VENDOR_ID_DELL, USB_DEVICE_ID_DELL_eRDHx_Temp) },
+	{ /* END OF LIST */ }
+};
 MODULE_DEVICE_TABLE(hid, ft260_devices);
 
 struct ft260_device {
